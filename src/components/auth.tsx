@@ -89,6 +89,8 @@ export const Login: React.FC<LoginProps> = ({
   const handleEmailLogin = async () => {
     try {
       await signIn({ username: email, password });
+      setIsLoggedIn(true);
+      setError("");
       console.log("User logged in ");
       dispatch(
         updateUser({
@@ -109,6 +111,7 @@ export const Login: React.FC<LoginProps> = ({
           loginFor: "",
         })
       );
+      handleAfterLogin(true, "taj");
     } catch (err: unknown) {
       console.log("Error while logging in ");
     }
