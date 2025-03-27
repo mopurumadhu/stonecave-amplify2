@@ -12,6 +12,155 @@ const schema = a.schema({
       content: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+
+  Property: a
+    .model({
+      id: a.string(),
+      type: a.string(),
+      descr: a.string(),
+      status: a.string(),
+      floors: a.integer(),
+      yearBuilt: a.integer(),
+      renovated: a.boolean(),
+      yearRenovated: a.integer(),
+      userId: a.string(),
+
+      lat: a.float(),
+      lng: a.float(),
+
+      ratingStar: a.float(),
+      ratingCount: a.integer(),
+
+      line1: a.string(),
+      line2: a.string(),
+      city: a.string(),
+      state: a.string(),
+      zip: a.string(),
+      landMark: a.string(),
+
+      firstName: a.string(),
+      lastName: a.string(),
+      mobile: a.string(),
+      email: a.string(),
+      lang1: a.string(),
+      lang2: a.string(),
+      lang3: a.string(),
+      lang4: a.string(),
+
+      imgURL: a.string(),
+
+      priceStart: a.integer(),
+      priceEnd: a.integer(),
+
+      isGym: a.boolean(),
+      isCarParking: a.boolean(),
+      isBikeParking: a.boolean(),
+
+      isDaily: a.boolean(),
+      isWeekly: a.boolean(),
+      isMonthly: a.boolean(),
+
+      dailyMinPrice: a.integer(),
+      dailyMaxPrice: a.integer(),
+      weeklyMinPrice: a.integer(),
+      weeklyMaxPrice: a.integer(),
+      monthlyMinPrice: a.integer(),
+      monthlyMaxPrice: a.integer(),
+
+      verified: a.boolean(),
+
+      mostCriticalRating: a.string(),
+      mostHelpfulRating: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  Amenity: a
+    .model({
+      propId: a.string(),
+      name: a.string(),
+      usageType: a.string(),
+      amount: a.integer(),
+      span: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  Image: a
+    .model({
+      propId: a.string(),
+      fileName: a.string(),
+      descr: a.string(),
+      displayOrder: a.integer(),
+      imageURL: a.string(),
+      width: a.integer(),
+      height: a.integer(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  NearBy: a
+    .model({
+      propId: a.string(),
+      type: a.string(),
+      name: a.string(),
+      displayOrder: a.integer(),
+      lat: a.integer(),
+      lng: a.integer(),
+
+      distance: a.integer(),
+
+      line1: a.string(),
+      line2: a.string(),
+      city: a.string(),
+      state: a.string(),
+      zip: a.string(),
+      landMark: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  User: a
+    .model({
+      propId: a.string(),
+      displayName: a.string(),
+      firstName: a.string(),
+      lastName: a.string(),
+      email: a.string(),
+      signInMethod: a.string(),
+      mobile: a.string(),
+      lang1: a.string(),
+      lang2: a.string(),
+      lang3: a.string(),
+      lang4: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  Rating: a
+    .model({
+      id: a.string(), // rating id is needed for RatingConversation
+      propId: a.string(),
+      userId: a.string(),
+      stayedFrom: a.string(),
+      stayedTo: a.string(),
+      stayCurrent: a.boolean(),
+      rating: a.integer(),
+      cleanRating: a.integer(),
+      foodRating: a.integer(),
+      valueRating: a.integer(),
+      amensRating: a.integer(),
+      title: a.string(),
+      comment: a.string(),
+      status: a.string(),
+      createdDate: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  RatingConversation: a
+    .model({
+      ratingId: a.string(),
+      userId: a.string(),
+      comment: a.string(),
+      status: a.string(),
+      createdDate: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
