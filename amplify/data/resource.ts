@@ -83,13 +83,6 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
-  ApproveProperty: a
-    .mutation()
-    .arguments({ propId: a.string() })
-    .returns(a.ref("Property"))
-    .authorization((allow) => [allow.publicApiKey()]),
-  // .handler(a.handler.function(echoHandler))
-
   Amenity: a
     .model({
       propId: a.string(),
