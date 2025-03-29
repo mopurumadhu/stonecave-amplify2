@@ -17,27 +17,34 @@ const schema = a.schema({
     .model({
       id: a.string(),
       type: a.string(),
-      descr: a.string(),
+      title: a.string(),
+      description: a.string(),
       status: a.string(),
       floors: a.integer(),
+      AddedDate: a.string(),
+      Effective: a.string(),
+      coverImgage: a.string(),
       yearBuilt: a.integer(),
       renovated: a.boolean(),
       yearRenovated: a.integer(),
       userId: a.string(),
 
-      lat: a.float(),
-      lng: a.float(),
+      // price range
+      priceStart: a.integer(),
+      priceEnd: a.integer(),
 
-      ratingStar: a.float(),
-      ratingCount: a.integer(),
-
+      // property address
       line1: a.string(),
       line2: a.string(),
       city: a.string(),
       state: a.string(),
       zip: a.string(),
       landMark: a.string(),
+      geoCode: a.string(),
+      lat: a.float(),
+      lng: a.float(),
 
+      // primary contact details
       firstName: a.string(),
       lastName: a.string(),
       mobile: a.string(),
@@ -47,10 +54,12 @@ const schema = a.schema({
       lang3: a.string(),
       lang4: a.string(),
 
-      imgURL: a.string(),
+      // rating summary
+      ratingStar: a.float(),
+      ratingCount: a.integer(),
 
-      priceStart: a.integer(),
-      priceEnd: a.integer(),
+      // cover image url
+      imgURL: a.string(),
 
       isGym: a.boolean(),
       isCarParking: a.boolean(),
@@ -74,6 +83,13 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
+  ApproveProperty: a
+    .mutation()
+    .arguments({ propId: a.string() })
+    .returns(a.ref("Property"))
+    .authorization((allow) => [allow.publicApiKey()]),
+  // .handler(a.handler.function(echoHandler))
+
   Amenity: a
     .model({
       propId: a.string(),
@@ -82,7 +98,42 @@ const schema = a.schema({
       amount: a.integer(),
       span: a.string(),
     })
-    .authorization((allow) => [allow.publicApiKey()]),
+    .authorization((allow) => [
+      allow.publicApiKey().to(["read"]),
+      allow.owner(),
+    ]),
+
+  MasterAmenity: a
+    .model({
+      name: a.string(),
+      iconName: a.string(),
+      displayValue: a.string(),
+    })
+    .authorization((allow) => [
+      allow.publicApiKey().to(["read"]),
+      allow.owner(),
+    ]),
+
+  MasterAmenityUsageType: a
+    .model({
+      name: a.string(),
+      iconName: a.string(),
+    })
+    .authorization((allow) => [
+      allow.publicApiKey().to(["read"]),
+      allow.owner(),
+    ]),
+
+  MasterStayPlan: a
+    .model({
+      name: a.string(),
+      iconName: a.string(),
+      displayValue: a.string(),
+    })
+    .authorization((allow) => [
+      allow.publicApiKey().to(["read"]),
+      allow.owner(),
+    ]),
 
   Image: a
     .model({
@@ -159,6 +210,16 @@ const schema = a.schema({
       comment: a.string(),
       status: a.string(),
       createdDate: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+  StayPlan: a
+    .model({
+      propId: a.string(),
+      name: a.string(),
+      minPrice: a.integer(),
+      maxPrice: a.integer(),
+      foodIncluded: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });
